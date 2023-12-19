@@ -2,44 +2,34 @@ package main
 
 import "fmt"
 
-type Dictionary struct {
-	entries map[string]string
+func add(dictionary map[string]string, word, definition string) {
+	dictionary[word] = definition
 }
 
-func NewDictionary() *Dictionary {
-	return &Dictionary{
-		entries: make(map[string]string),
-	}
-}
-
-func (d *Dictionary) Add(word, definition string) {
-	d.entries[word] = definition
-}
-
-func (d *Dictionary) Get(word string) (string, bool) {
-	definition, found := d.entries[word]
+func getDefinition(dictionary map[string]string, word string) (string, bool) {
+	definition, found := dictionary[word]
 	return definition, found
 }
 
-func (d *Dictionary) Remove(word string) {
-	delete(d.entries, word)
+func remove(dictionary map[string]string, word string) {
+	delete(dictionary, word)
 }
 
-func (d *Dictionary) List() {
-	for word, definition := range d.entries {
+func list(dictionary map[string]string) {
+	for word, definition := range dictionary {
 		fmt.Printf("%s: %s\n", word, definition)
 	}
 }
 
 func main() {
-	dictionary := NewDictionary()
+	dictionary := make(map[string]string)
 
-	dictionary.Add("fraise", "fruit")
-	dictionary.Add("go", "langage de programmation")
-	dictionary.Add("computer", "machine électronique")
+	add(dictionary, "fraise", "fruit")
+	add(dictionary, "go", "langage de programmation")
+	add(dictionary, "computer", "machine électronique")
 
 	wordToGet := "go"
-	definition, found := dictionary.Get(wordToGet)
+	definition, found := getDefinition(dictionary, wordToGet)
 	if found {
 		fmt.Printf("La définition de %s est : %s\n", wordToGet, definition)
 	} else {
@@ -47,8 +37,8 @@ func main() {
 	}
 
 	wordToRemove := "go"
-	dictionary.Remove(wordToRemove)
+	remove(dictionary, wordToRemove)
 
 	fmt.Println("\nDictionnaire après suppression:")
-	dictionary.List()
+	list(dictionary)
 }
