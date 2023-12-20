@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	dict := dictionary.NewDictionary()
+	dict := dictionary.NewDictionary("dictionary.json")
 	dict.Add("go", "Go programming language")
 	dict.Add("rust", "Systems programming language")
 
